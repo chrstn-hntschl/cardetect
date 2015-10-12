@@ -6,6 +6,7 @@ This repository contains source code for training and testing a simple car detec
 
 ### Running
 In order to compile and run the detector, I prepared a small docker file that will:
+
 1. Set up Ubuntu Linux 14.04 as base image
 2. Install OpenCV from ubuntu repository
 3. Pull the source code as well as all required resources from this guthub repository
