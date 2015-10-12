@@ -1,0 +1,16 @@
+FROM ubuntu:trusty
+MAINTAINER Christian Hentschel "christian.hentschel@hpi.de"
+
+RUN apt-get update && apt-get install -y \
+    cmake \
+    libopencv-dev \
+    git 
+
+RUN adduser cardetect 
+RUN cd /home/cardetect && git clone https://github.com/chrstn-hntschl/cardetect.git cardetect.git && cd cardetect.git 
+WORKDIR /home/cardetect/cardetect.git
+RUN cd res && opencv_createsamples -info cars.info -num 550 -w 48 -h 24 -vec cars.vec
+RUN cd res && mkdir model && opencv_traincascade -data model -vec cars.vec -bg bg.txt -numPos 500 -numNeg 500 -numStages 2 -w 48 -h 24 -featureType LBP
+
+RUN mkdir build && cd build && cmake ../src/ && make
+
